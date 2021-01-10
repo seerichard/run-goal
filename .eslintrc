@@ -28,7 +28,7 @@
   "rules": {
     "prefer-const": "error",
     "react/react-in-jsx-scope": "off",
-    "no-console": "error"
+    "no-console": "warn"
   },
   "overrides": [
     /**
