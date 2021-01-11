@@ -6,10 +6,18 @@ type FormValues = {
   clientSecret: string;
 };
 
-const App: FC = () => {
+const Form: FC = () => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const onSubmit = (data: FormValues) => console.log(data);
+
+  const onSubmit = ({ clientId, clientSecret }: FormValues) => {
+    localStorage.setItem('clientId', clientId);
+    localStorage.setItem('clientSecret', clientSecret);
+
+    const redirectUrl = window.location.href;
+
+    window.location.href = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=activity:read_all`;
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -21,9 +29,9 @@ const App: FC = () => {
       <input name="clientSecret" ref={register({ required: true })} />
       {errors.clientSecret && 'Please enter a Client Secret'}
 
-      <input type="submit" />
+      <button type="submit">Submit</button>
     </form>
   );
 };
 
-export default App;
+export default Form;
