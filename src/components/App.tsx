@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Form from './Form';
 import TokenFetcher from './TokenFetcher';
+import MainScreen from './MainScreen';
 import { REFRESH_TOKEN } from '../constants';
 
 const getCodeParam = () => {
@@ -15,7 +16,7 @@ const App: FC = () => {
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
   return refreshToken ? (
-    <div>Token fetched</div>
+    <MainScreen />
   ) : code ? (
     <TokenFetcher code={code} />
   ) : (
