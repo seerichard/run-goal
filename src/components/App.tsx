@@ -14,8 +14,8 @@ type Token = (code: string) => Promise<void>;
 
 // This fetches the Access and Refresh tokens required to pull athlete data
 const getTokens: Token = async (code: string) => {
-  const clientId = localStorage.getItem('clientId');
-  const clientSecret = localStorage.getItem('clientSecret');
+  const clientId = sessionStorage.getItem('clientId');
+  const clientSecret = sessionStorage.getItem('clientSecret');
 
   const fetchResponse = await fetch(
     `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`,
@@ -29,8 +29,8 @@ const getTokens: Token = async (code: string) => {
   localStorage.setItem('accessToken', data.access_token);
   localStorage.setItem('refreshToken', data.refresh_token);
 
-  localStorage.removeItem('clientId');
-  localStorage.removeItem('clientSecret');
+  sessionStorage.removeItem('clientId');
+  sessionStorage.removeItem('clientSecret');
 
   console.log('My tokens!', data);
 
