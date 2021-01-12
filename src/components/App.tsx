@@ -14,8 +14,8 @@ type Token = (code: string) => Promise<void>;
 
 // This fetches the Access and Refresh tokens required to pull athlete data
 const getTokens: Token = async (code: string) => {
-  const clientId = sessionStorage.getItem('clientId');
-  const clientSecret = sessionStorage.getItem('clientSecret');
+  const clientId = localStorage.getItem('clientId');
+  const clientSecret = localStorage.getItem('clientSecret');
 
   const fetchResponse = await fetch(
     `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`,
@@ -25,12 +25,19 @@ const getTokens: Token = async (code: string) => {
   );
 
   const data = await fetchResponse.json();
+  const {
+    access_token,
+    refresh_token,
+    athlete: { firstName, lastName },
+  } = data;
 
-  localStorage.setItem('accessToken', data.access_token);
-  localStorage.setItem('refreshToken', data.refresh_token);
+  localStorage.setItem('accessToken', access_token);
+  localStorage.setItem('refreshToken', refresh_token);
+  localStorage.setItem('firstName', firstName);
+  localStorage.setItem('lastName', lastName);
 
-  sessionStorage.removeItem('clientId');
-  sessionStorage.removeItem('clientSecret');
+  localStorage.removeItem('clientId');
+  localStorage.removeItem('clientSecret');
 
   console.log('My tokens!', data);
 
@@ -41,6 +48,7 @@ const getTokens: Token = async (code: string) => {
 
 const App: FC = () => {
   const code = getCodeParam();
+  const refreshToken = localStorage.getItem('refreshToken');
 
   console.log('window hostname:', window.location.hostname);
   console.log('window pathname:', window.location.pathname);
@@ -51,7 +59,13 @@ const App: FC = () => {
       .catch(() => console.log('Catching'));
   }
 
-  return code ? <div>Wow the code is: {code}</div> : <Form />;
+  return refreshToken ? (
+    <div>Token fetched</div>
+  ) : code ? (
+    <div>Wow the code is: {code}</div>
+  ) : (
+    <Form />
+  );
 };
 
 export default App;
