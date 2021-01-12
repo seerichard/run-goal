@@ -44,12 +44,10 @@ type Props = {
 };
 
 const TokenFetcher: FC<Props> = ({ code }) => {
-  console.log('Inside Token Fetcher!');
-
   useEffect(() => {
-    getTokens(code)
-      .then(() => console.log('Done'))
-      .catch(() => console.log('Catching'));
+    getTokens(code).catch((error) =>
+      console.log('Something happened fetching the token :(', error),
+    );
   }, []);
 
   return <div>Token Fetcher Component</div>;
