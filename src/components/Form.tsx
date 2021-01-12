@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { CLIENT_ID, CLIENT_SECRET } from '../constants';
 
 type FormValues = {
   clientId: string;
@@ -11,8 +12,8 @@ const Form: FC = () => {
   const { register, errors, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = ({ clientId, clientSecret }: FormValues) => {
-    localStorage.setItem('clientId', clientId);
-    localStorage.setItem('clientSecret', clientSecret);
+    localStorage.setItem(CLIENT_ID, clientId);
+    localStorage.setItem(CLIENT_SECRET, clientSecret);
 
     const redirectUrl = window.location.href;
 
