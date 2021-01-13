@@ -4,6 +4,9 @@ type GetTokensProps = {
   code: string;
 };
 
+/**
+ * Gets the initial refresh and access tokens when app is first authorised
+ */
 export const getTokensUrl = ({
   clientId,
   clientSecret,
@@ -17,6 +20,10 @@ type RefreshTokenProps = {
   refreshToken: string;
 };
 
+/**
+ * Refreshes the access token.
+ * Best to call before fetching activities to ensure the access token has not expired
+ */
 export const refreshTokenUrl = ({
   clientId,
   clientSecret,
@@ -28,6 +35,11 @@ type GetActivitiesProps = {
   accessToken: string;
 };
 
+/**
+ * Gets all activities logged in Strava for the year 2021.
+ * This includes all non running activities.
+ * Page limit set to 200 as that seems to be the maximum
+ */
 export const getActivitiesUrl = ({
   accessToken,
 }: GetActivitiesProps): string => {

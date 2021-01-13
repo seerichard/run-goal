@@ -1,12 +1,12 @@
 import { FC, useEffect } from 'react';
-import { refreshToken, getActivities } from '../api';
+import { refreshToken, getRuns } from '../api';
 
 const MainScreen: FC = () => {
   useEffect(() => {
     refreshToken().catch((error) =>
       console.log('Something happened refreshing the token :(', error),
     );
-    getActivities().catch((error) =>
+    getRuns().catch((error) =>
       console.log('Something happened getting activities :(', error),
     );
   }, []);

@@ -11,7 +11,11 @@ import {
 
 type Token = (code: string) => Promise<void>;
 
-// This fetches the Access and Refresh tokens required to pull athlete data
+/**
+ * Fetch initial user access token, refresh token, first name and last name
+ * then store in local storage.
+ * Once completed, clear url and push user to home
+ */
 export const getTokens: Token = async (code: string) => {
   const clientId = localStorage.getItem(CLIENT_ID)!;
   const clientSecret = localStorage.getItem(CLIENT_SECRET)!;
@@ -39,6 +43,9 @@ export const getTokens: Token = async (code: string) => {
 
 type VoidReturn = () => Promise<void>;
 
+/**
+ * Refresh the access token and store in local storage
+ */
 export const refreshToken: VoidReturn = async () => {
   const clientId = localStorage.getItem(CLIENT_ID)!;
   const clientSecret = localStorage.getItem(CLIENT_SECRET)!;
@@ -61,13 +68,18 @@ export const refreshToken: VoidReturn = async () => {
   localStorage.setItem(ACCESS_TOKEN, access_token);
 };
 
-export const getActivities: VoidReturn = async () => {
+/**
+ * Return an array of Run activities
+ */
+export const getRuns: VoidReturn = async () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN)!;
   const RUN = 'Run';
 
   const response = await fetch(getActivitiesUrl({ accessToken }));
 
   const data = await response.json();
+
+  // Filter out all non run activities
   const runData = data.filter(({ type }: { type: string }) => type === RUN);
 
   return runData;
