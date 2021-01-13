@@ -68,10 +68,13 @@ export const refreshToken: VoidReturn = async () => {
   localStorage.setItem(ACCESS_TOKEN, access_token);
 };
 
+// Fix this any
+type Runs = () => Promise<any>;
+
 /**
  * Return an array of Run activities
  */
-export const getRuns: VoidReturn = async () => {
+export const getRuns: Runs = async () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN)!;
   const RUN = 'Run';
 
