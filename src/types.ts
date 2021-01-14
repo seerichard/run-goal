@@ -27,8 +27,8 @@ export type Activity = {
   id: number;
   external_id: string;
   upload_id: number;
-  start_date: Date;
-  start_date_local: Date;
+  start_date: string; // Date type instead? Get type complaints against mock data with Date
+  start_date_local: string; // Date type instead? Get type complaints against mock data with Date
   timezone: string; // Not sure this is correct
   utc_offset: number;
   start_latlng: [number, number];
@@ -64,5 +64,5 @@ export type Activity = {
   elev_low: number;
   pr_count: number;
   total_photo_count: number;
-  has_kudoed: true;
+  has_kudoed: boolean;
 };
