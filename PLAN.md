@@ -14,6 +14,7 @@
   - Running stick figure?
 - Hook into Strava API
 - Authentication and persistent login? Might have to store token in local storage/cookie
+- React Router for auth process to get access and refresh token
 - Fetch data using basic fetch , react-query , swr ?
 - Clean data and store payload in React Context
 - May need some animation library - start without one
@@ -30,3 +31,14 @@
 - Elevation (total?)
 - Average pace
 - Total time running
+
+## TODO
+
+- Remove the eslint-disable in App.tsx
+- Move the url redirect from API to TokenFetcher component and update comment
+- Add types to run data
+- Remove eslint-disable in api.ts
+- Wrap API calls in try/catch instead of .then()
+- Link to Strava docs
+- Is there a way to safely store the client id and secret locally? - Required to refresh access token
+- Look into Web Vitals
