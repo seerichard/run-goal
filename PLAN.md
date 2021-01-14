@@ -43,3 +43,4 @@
 - Is there a way to safely store the client id and secret locally? - Required to refresh access token
 - Look into Web Vitals
 - Try using the Strava npm package https://www.npmjs.com/package/strava-v3
+- Look into polyline
