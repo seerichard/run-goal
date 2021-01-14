@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { getTokensUrl, refreshTokenUrl, getActivitiesUrl } from './url';
+import { Activity } from './types';
 import {
   CLIENT_ID,
   CLIENT_SECRET,
@@ -69,7 +70,7 @@ export const refreshToken: VoidReturn = async () => {
 };
 
 // Fix this any
-type Runs = () => Promise<any>;
+type Runs = () => Promise<Activity[]>;
 
 /**
  * Return an array of Run activities
@@ -80,7 +81,7 @@ export const getRuns: Runs = async () => {
 
   const response = await fetch(getActivitiesUrl({ accessToken }));
 
-  const data = await response.json();
+  const data: Activity[] = await response.json();
 
   // Filter out all non run activities
   const runData = data.filter(({ type }: { type: string }) => type === RUN);

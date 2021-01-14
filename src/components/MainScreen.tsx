@@ -1,8 +1,9 @@
 import { FC, useState, useEffect } from 'react';
 import { refreshToken, getRuns } from '../api';
+import { Activity } from '../types';
 
 const MainScreen: FC = () => {
-  const [runData, setRunData] = useState<any[]>([]);
+  const [runData, setRunData] = useState<Activity[]>([]);
 
   useEffect(() => {
     refreshToken().catch((error) =>
@@ -18,17 +19,13 @@ const MainScreen: FC = () => {
 
   console.log('runData:', runData);
 
-  const totalDistance: number =
-    runData.reduce(
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      (acc, curr) => acc + curr.distance,
-      0,
-    ) / 10;
-
   const totalDistanceKm =
-    Math.round(totalDistance + Number.EPSILON * 100) / 100;
+    runData.reduce((acc, curr) => acc + curr.distance, 0) / 10;
 
-  return <div>Total Distance Run This Year: {totalDistanceKm}km</div>;
+  const totalDistance2Dp =
+    Math.round(totalDistanceKm + Number.EPSILON * 100) / 100;
+
+  return <div>Total Distance Run This Year: {totalDistance2Dp}km</div>;
 };
 
 export default MainScreen;
