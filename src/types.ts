@@ -23,7 +23,7 @@ export type Activity = {
   elapsed_time: number; // Seconds
   total_elevation_gain: number; // Metres
   type: string; // Can be improved to be an enum of accepted activity types
-  workout_type: null; // Example docs have null
+  workout_type: number | null;
   id: number;
   external_id: string;
   upload_id: number;
@@ -33,9 +33,9 @@ export type Activity = {
   utc_offset: number;
   start_latlng: [number, number];
   end_latlng: [number, number];
-  location_city: null; // Example docs have null
-  location_state: null; // Example docs have null
-  location_country: null; // Example docs have null
+  location_city: string | null;
+  location_state: string | null;
+  location_country: string | null;
   start_latitude: number;
   start_longitude: number;
   achievement_count: number;
