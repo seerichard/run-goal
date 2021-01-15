@@ -1,4 +1,4 @@
-import { Authorize } from '../types/authorize';
+import { Authorize } from '../types';
 
 export const MOCK_AUTHORIZE: Authorize = {
   access_token: '468d73836d5281666c228074c5fc8e99903e1aa0',

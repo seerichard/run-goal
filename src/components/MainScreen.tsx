@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Dog } from '../images/dog.svg';
 import { refreshToken, getRuns } from '../api';
-import { Activity } from '../types/activity';
+import { Activity } from '../types';
 
 const Doggy = styled(Dog)`
   height: 100px;

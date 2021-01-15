@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { getTokensUrl, refreshTokenUrl, getActivitiesUrl } from './url';
-import { Authorize } from './types/authorize';
-import { Refresh } from './types/refresh';
-import { Activity } from './types/activity';
+import { Authorize, Refresh, Activity } from './types';
 import {
   CLIENT_ID,
   CLIENT_SECRET,

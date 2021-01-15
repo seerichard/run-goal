@@ -1,4 +1,4 @@
-import { Refresh } from '../types/refresh';
+import { Refresh } from '../types';
 
 export const MOCK_REFRESH: Refresh = {
   access_token: '468d73836d5281666c228074c5fc8e99903e1aa0',
