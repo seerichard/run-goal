@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
-// import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: 'Poppins', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;
