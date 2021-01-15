@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { getTokensUrl, refreshTokenUrl, getActivitiesUrl } from './url';
 import { Authorize } from './types/authorize';
+import { Refresh } from './types/refresh';
 import { Activity } from './types/activity';
 import {
   CLIENT_ID,
@@ -67,7 +68,7 @@ export const refreshToken: VoidReturn = async () => {
   );
 
   // Add data type
-  const data = await response.json();
+  const data: Refresh = await response.json();
   const { access_token } = data;
 
   localStorage.setItem(ACCESS_TOKEN, access_token);
