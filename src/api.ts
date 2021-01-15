@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { getTokensUrl, refreshTokenUrl, getActivitiesUrl } from './url';
-import { Activity } from './types';
+import { Authorize } from './types/authorize';
+import { Activity } from './types/activity';
 import {
   CLIENT_ID,
   CLIENT_SECRET,
@@ -25,7 +26,9 @@ export const getTokens: Token = async (code: string) => {
     method: 'POST',
   });
 
-  const data = await response.json();
+  // Add data type
+  const data: Authorize = await response.json();
+
   const {
     access_token,
     refresh_token,
@@ -63,6 +66,7 @@ export const refreshToken: VoidReturn = async () => {
     },
   );
 
+  // Add data type
   const data = await response.json();
   const { access_token } = data;
 

@@ -44,3 +44,4 @@
 - Look into Web Vitals
 - Try using the Strava npm package https://www.npmjs.com/package/strava-v3
 - Look into polyline
+- Improve types and add error tpyes for API calls
