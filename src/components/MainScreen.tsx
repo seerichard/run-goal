@@ -1,16 +1,6 @@
 import { FC, useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { ReactComponent as Dog } from '../images/dog.svg';
 import { refreshToken, getRuns } from '../api';
 import { Activity } from '../types';
-
-const Doggy = styled(Dog)`
-  height: 100px;
-  color: red;
-  background-color: green;
-  fill: blue;
-  stroke: orange;
-`;
 
 const MainScreen: FC = () => {
   const [runData, setRunData] = useState<Activity[]>([]);
@@ -38,7 +28,6 @@ const MainScreen: FC = () => {
   return (
     <div>
       <div>Total Distance Run This Year: {totalDistance2Dp}km</div>
-      <Doggy />
     </div>
   );
 };

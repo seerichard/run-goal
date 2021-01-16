@@ -1,6 +1,21 @@
 import { FC } from 'react';
+import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { ReactComponent as Dog } from '../images/dog.svg';
+import { white } from '../styles/colors';
 import { CLIENT_ID, CLIENT_SECRET } from '../constants';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Doggy = styled(Dog)`
+  width: 250px;
+  fill: ${white};
+  stroke: orange;
+`;
 
 type FormValues = {
   clientId: string;
@@ -21,17 +36,20 @@ const Form: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Client Id</label>
-      <input name="clientId" ref={register({ required: true })} />
-      {errors.clientId && 'Please enter a Client Id'}
+    <Wrapper>
+      <Doggy />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Client Id</label>
+        <input name="clientId" ref={register({ required: true })} />
+        {errors.clientId && 'Please enter a Client Id'}
 
-      <label>Client Secret</label>
-      <input name="clientSecret" ref={register({ required: true })} />
-      {errors.clientSecret && 'Please enter a Client Secret'}
+        <label>Client Secret</label>
+        <input name="clientSecret" ref={register({ required: true })} />
+        {errors.clientSecret && 'Please enter a Client Secret'}
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
+    </Wrapper>
   );
 };
 
