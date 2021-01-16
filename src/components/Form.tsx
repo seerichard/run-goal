@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { ReactComponent as Dog } from '../images/dog.svg';
-import { white } from '../styles/colors';
+import { white, dark1, dark2, grey1 } from '../styles/colors';
 import { CLIENT_ID, CLIENT_SECRET } from '../constants';
 
 const Wrapper = styled.div`
@@ -12,9 +12,72 @@ const Wrapper = styled.div`
 `;
 
 const Doggy = styled(Dog)`
-  width: 250px;
   fill: ${white};
-  stroke: orange;
+  stroke: ${grey1};
+  width: 200px;
+  margin-top: 40px;
+`;
+
+const Title = styled.h1`
+  color: ${white};
+  font-size: 40px;
+  margin: 0;
+  margin-top: -30px; /* To negate the height of the svg */
+`;
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 40px;
+  padding: 30px;
+`;
+
+const Input = styled.input`
+  padding: 0;
+  margin: 0;
+  border: ${grey1} 1px solid;
+  border-radius: 2px;
+  background-color: ${dark2};
+  color: ${grey1};
+  color: ${white};
+  height: 40px;
+  margin-bottom: 15px;
+  padding-left: 20px;
+  font-size: 16px;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border: ${white} 1px solid;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+`;
+
+const SubmitButton = styled.button`
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  height: 40px;
+  border: none;
+  border-radius: 2px;
+  background-color: ${white};
+  color: ${dark1};
+  font-size: 16px;
+  font-weight: bold;
+  font-family: inherit;
 `;
 
 type FormValues = {
@@ -38,17 +101,27 @@ const Form: FC = () => {
   return (
     <Wrapper>
       <Doggy />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Client Id</label>
-        <input name="clientId" ref={register({ required: true })} />
+      <Title>Run Goal</Title>
+      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          name="clientId"
+          type="number"
+          inputMode="numeric"
+          placeholder="Client Id"
+          ref={register({ required: true })}
+        />
         {errors.clientId && 'Please enter a Client Id'}
 
-        <label>Client Secret</label>
-        <input name="clientSecret" ref={register({ required: true })} />
+        <Input
+          name="clientSecret"
+          type="password"
+          placeholder="Client Secret"
+          ref={register({ required: true })}
+        />
         {errors.clientSecret && 'Please enter a Client Secret'}
 
-        <button type="submit">Submit</button>
-      </form>
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </FormWrapper>
     </Wrapper>
   );
 };

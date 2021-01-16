@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import { background } from './styles/colors';
+import { dark1 } from './styles/colors';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: ${background};
+    background-color: ${dark1};
   }
 `;
 
