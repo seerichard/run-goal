@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { authorizeUrl } from '../url';
 import { ReactComponent as Dog } from '../images/dog.svg';
+import { media } from '../styles/breakpoints';
 import { white, dark1, dark2, grey1 } from '../styles/colors';
 import { CLIENT_ID, CLIENT_SECRET } from '../constants';
 
@@ -17,6 +18,11 @@ const Doggy = styled(Dog)`
   stroke: ${grey1};
   width: 200px;
   margin-top: 40px;
+
+  @media ${media.cinema} {
+    width: 12.5vw;
+    margin-top: 2.5vw;
+  }
 `;
 
 const Title = styled.h1`
@@ -24,15 +30,29 @@ const Title = styled.h1`
   font-size: 40px;
   margin: 0;
   margin-top: -30px; /* To negate the height of the svg */
+  text-align: center;
+
+  @media ${media.cinema} {
+    font-size: 2.5vw;
+    margin-top: -1.875vw;
+  }
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 60px); /* Margin of 30px on each side */
   box-sizing: border-box;
   margin-top: 40px;
-  padding: 30px;
+
+  @media ${media.tablet} {
+    width: 400px;
+  }
+
+  @media ${media.cinema} {
+    width: 25vw;
+    margin-top: 2.5vw;
+  }
 `;
 
 const Input = styled.input`
@@ -54,6 +74,7 @@ const Input = styled.input`
     border: ${white} 1px solid;
   }
 
+  // Hide the number arrows in the number field
   /* Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -64,6 +85,19 @@ const Input = styled.input`
   /* Firefox */
   &[type='number'] {
     -moz-appearance: textfield;
+  }
+
+  @media ${media.cinema} {
+    border: ${grey1} 0.0625vw solid;
+    border-radius: 0.125vw;
+    height: 2.5vw;
+    margin-bottom: 0.9375vw;
+    padding-left: 1.25vw;
+    font-size: 1vw;
+
+    &:focus {
+      border: ${white} 0.0625vw solid;
+    }
   }
 `;
 
@@ -79,6 +113,12 @@ const SubmitButton = styled.button`
   font-size: 16px;
   font-weight: bold;
   font-family: inherit;
+
+  @media ${media.cinema} {
+    height: 2.5vw;
+    border-radius: 0.125vw;
+    font-size: 1vw;
+  }
 `;
 
 type FormValues = {
@@ -101,8 +141,10 @@ const Form: FC = () => {
 
   return (
     <Wrapper>
-      <Doggy />
-      <Title>Run Goal</Title>
+      <div>
+        <Doggy />
+        <Title>Run Goal</Title>
+      </div>
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>
         <Input
           name="clientId"
