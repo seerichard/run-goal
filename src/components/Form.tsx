@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { authorizeUrl } from '../url';
 import { ReactComponent as Dog } from '../images/dog.svg';
 import { white, dark1, dark2, grey1 } from '../styles/colors';
 import { CLIENT_ID, CLIENT_SECRET } from '../constants';
@@ -95,7 +96,7 @@ const Form: FC = () => {
 
     const redirectUrl = window.location.href;
 
-    window.location.href = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=activity:read_all`;
+    window.location.href = authorizeUrl({ clientId, redirectUrl });
   };
 
   return (

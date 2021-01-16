@@ -1,3 +1,17 @@
+type AuthorizeProps = {
+  clientId: string;
+  redirectUrl: string;
+};
+
+/**
+ * Creates the URL to redirect the user to authorise this app
+ */
+export const authorizeUrl = ({
+  clientId,
+  redirectUrl,
+}: AuthorizeProps): string =>
+  `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=activity:read_all`;
+
 type GetTokensProps = {
   clientId: string;
   clientSecret: string;
