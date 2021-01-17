@@ -42,9 +42,11 @@ type Props = {
 
 const TokenFetcher: FC<Props> = ({ code }) => {
   useEffect(() => {
-    getTokens(code).catch((error) =>
-      console.log('Something happened fetching the token :(', error),
-    );
+    setTimeout(() => {
+      getTokens(code).catch((error) =>
+        console.log('Something happened fetching the token :(', error),
+      );
+    }, 3000);
   }, []);
 
   return (
