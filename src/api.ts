@@ -6,8 +6,8 @@ import {
   CLIENT_SECRET,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-  FIRST_NAME,
-  LAST_NAME,
+  // FIRST_NAME,
+  // LAST_NAME,
 } from './constants';
 
 type Token = (code: string) => Promise<void>;
@@ -31,13 +31,13 @@ export const getTokens: Token = async (code: string) => {
   const {
     access_token,
     refresh_token,
-    athlete: { firstname, lastname },
+    // athlete: { firstname, lastname },
   } = data;
 
   localStorage.setItem(ACCESS_TOKEN, access_token);
   localStorage.setItem(REFRESH_TOKEN, refresh_token);
-  localStorage.setItem(FIRST_NAME, firstname);
-  localStorage.setItem(LAST_NAME, lastname);
+  // localStorage.setItem(FIRST_NAME, firstname);
+  // localStorage.setItem(LAST_NAME, lastname);
 
   const url = window.location.href;
 
