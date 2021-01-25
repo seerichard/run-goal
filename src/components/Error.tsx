@@ -12,11 +12,11 @@ const Wrapper = styled.div`
   border-radius: 5px;
 
   @media ${media.tablet} {
-    width: 400px;
+    width: 750px;
   }
 
   @media ${media.cinema} {
-    width: 25vw;
+    width: 50vw;
     margin: 2.5vw auto;
     border: ${red} 0.0625vw solid;
     border-radius: 0.3125vw;

@@ -5,7 +5,7 @@ import Error from './Error';
 import { getTokens } from '../api';
 import { ReactComponent as Puff } from '../images/puff.svg';
 import { media } from '../styles/breakpoints';
-import { white } from '../styles/colors';
+import { white, dark1 } from '../styles/colors';
 import { getTokensUrl } from '../url';
 
 const Wrapper = styled.div`
@@ -39,6 +39,28 @@ const Text = styled.span`
   }
 `;
 
+const TryAgain = styled.button`
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  height: 40px;
+  border: none;
+  border-radius: 2px;
+  background-color: ${white};
+  color: ${dark1};
+  font-size: 16px;
+  font-weight: bold;
+  font-family: inherit;
+  width: 150px;
+
+  @media ${media.cinema} {
+    height: 2.5vw;
+    border-radius: 0.125vw;
+    font-size: 1vw;
+    width: 9.375vw;
+  }
+`;
+
 type Props = {
   code: string;
 };
@@ -49,51 +71,34 @@ const options = {
   errorRetryCount: 0,
 };
 
-// const url = 'https://type.fit/api/quotes';
-
-// const fetcher = async () => {
-//   const res = await fetch(url);
-//   console.log('RES:', res);
-//   // If the status code is not in the range 200-299,
-//   // we still try to parse and throw it.
-//   if (res.ok) {
-//     const error = new Error(
-//       'An error occurred while fetching the data.',
-//     );
-//     // Attach extra info to the error object.
-//     error.info = await res.json();
-//     error.status = res.status;
-//     // return 'What the fuck';
-//     throw error;
-//   }
-//   return res.json();
-// };
-
-// const fetcher = async () => {
-//   const response = await fetch(url);
-//   return await response.json();
-// };
+const clearUrl = () => {
+  const url = window.location.href;
+  window.location.href = url.split('?')[0];
+};
 
 const TokenFetcher: FC<Props> = ({ code }) => {
   const url = getTokensUrl({ code });
   const { data, error } = useSWR(url, getTokens, options);
 
-  if (error) return <Error>{error}</Error>;
+  if (error) {
+    return (
+      <Wrapper>
+        <Error>{error}</Error>
+        <TryAgain onClick={clearUrl}>Try again</TryAgain>
+      </Wrapper>
+    );
+  }
 
   if (data) {
     // Redirect after three seconds. The redirect occurs too quickly otherwise
-    setTimeout(() => {
-      const url = window.location.href;
-      window.location.href = url.split('?')[0];
-    }, 3000);
+    setTimeout(() => clearUrl(), 3000);
   }
 
   return (
     <Wrapper>
       <Puffer />
       <Text>Linking account...</Text>
-      <Text>Data: {data}</Text>
-      <Text>Error: {error}</Text>
+      {data && <Text>Success!</Text>}
     </Wrapper>
   );
 };
