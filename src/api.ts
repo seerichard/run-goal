@@ -2,8 +2,6 @@
 import { getTokensUrl, refreshTokenUrl, getActivitiesUrl } from './url';
 import { Authorize, Refresh, Activity } from './types';
 import {
-  CLIENT_ID,
-  CLIENT_SECRET,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   FIRST_NAME,
@@ -49,20 +47,9 @@ type VoidReturn = () => Promise<void>;
  * Refresh the access token and store in local storage
  */
 export const refreshToken: VoidReturn = async () => {
-  const clientId = localStorage.getItem(CLIENT_ID)!;
-  const clientSecret = localStorage.getItem(CLIENT_SECRET)!;
-  const refreshToken = localStorage.getItem(REFRESH_TOKEN)!;
-
-  const response = await fetch(
-    refreshTokenUrl({
-      clientId,
-      clientSecret,
-      refreshToken,
-    }),
-    {
-      method: 'POST',
-    },
-  );
+  const response = await fetch(refreshTokenUrl(), {
+    method: 'POST',
+  });
 
   // Add data type
   const data: Refresh = await response.json();
@@ -77,10 +64,9 @@ type Runs = () => Promise<Activity[]>;
  * Return an array of Run activities
  */
 export const getRuns: Runs = async () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN)!;
   const RUN = 'Run';
 
-  const response = await fetch(getActivitiesUrl({ accessToken }));
+  const response = await fetch(getActivitiesUrl());
 
   const data: Activity[] = await response.json();
 

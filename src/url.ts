@@ -1,4 +1,9 @@
-import { CLIENT_ID, CLIENT_SECRET } from './constants';
+import {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REFRESH_TOKEN,
+  ACCESS_TOKEN,
+} from './constants';
 
 type AuthorizeProps = {
   clientId: string;
@@ -28,25 +33,16 @@ export const getTokensUrl = ({ code }: GetTokensProps): string => {
   return `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`;
 };
 
-type RefreshTokenProps = {
-  clientId: string;
-  clientSecret: string;
-  refreshToken: string;
-};
-
 /**
  * Refreshes the access token.
  * Best to call before fetching activities to ensure the access token has not expired
  */
-export const refreshTokenUrl = ({
-  clientId,
-  clientSecret,
-  refreshToken,
-}: RefreshTokenProps): string =>
-  `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
+export const refreshTokenUrl = (): string => {
+  const clientId = localStorage.getItem(CLIENT_ID);
+  const clientSecret = localStorage.getItem(CLIENT_SECRET);
+  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
-type GetActivitiesProps = {
-  accessToken: string;
+  return `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
 };
 
 /**
@@ -54,9 +50,9 @@ type GetActivitiesProps = {
  * This includes all non running activities.
  * Page limit set to 200 as that seems to be the maximum
  */
-export const getActivitiesUrl = ({
-  accessToken,
-}: GetActivitiesProps): string => {
+export const getActivitiesUrl = (): string => {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+
   // Current time - convert to seconds. Strava does not seem to accept milliseconds
   const BEFORE = Date.now() / 1000;
 
