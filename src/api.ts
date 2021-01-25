@@ -21,7 +21,7 @@ export const getTokens: Token = async (code: string) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
+    const error: Error = await response.json();
 
     throw error;
   }
@@ -41,24 +41,32 @@ export const getTokens: Token = async (code: string) => {
   return true;
 };
 
-type VoidReturn = () => Promise<void>;
+type RefreshToken = () => Promise<Error | true>;
 
 /**
  * Refresh the access token and store in local storage
  */
-export const refreshToken: VoidReturn = async () => {
+export const refreshToken: RefreshToken = async () => {
   const response = await fetch(refreshTokenUrl(), {
     method: 'POST',
   });
+
+  if (!response.ok) {
+    const error: Error = await response.json();
+
+    throw error;
+  }
 
   // Add data type
   const data: Refresh = await response.json();
   const { access_token } = data;
 
   localStorage.setItem(ACCESS_TOKEN, access_token);
+
+  return true;
 };
 
-type Runs = () => Promise<Activity[]>;
+type Runs = () => Promise<Error | Activity[]>;
 
 /**
  * Return an array of Run activities
@@ -67,6 +75,12 @@ export const getRuns: Runs = async () => {
   const RUN = 'Run';
 
   const response = await fetch(getActivitiesUrl());
+
+  if (!response.ok) {
+    const error: Error = await response.json();
+
+    throw error;
+  }
 
   const data: Activity[] = await response.json();
 
