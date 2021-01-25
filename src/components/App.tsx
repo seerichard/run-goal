@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import Form from './Form';
 import TokenFetcher from './TokenFetcher';
 import MainScreen from './MainScreen';

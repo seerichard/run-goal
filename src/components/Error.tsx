@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { media } from '../styles/breakpoints';
 import { red } from '../styles/colors';
@@ -38,7 +38,7 @@ const Text = styled.span`
 `;
 
 type ErrorProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const Error: FC<ErrorProps> = ({ children }) => (
