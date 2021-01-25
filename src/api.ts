@@ -6,11 +6,12 @@ import {
   CLIENT_SECRET,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-  // FIRST_NAME,
-  // LAST_NAME,
+  FIRST_NAME,
+  LAST_NAME,
 } from './constants';
 
-type Token = (code: string) => Promise<void>;
+// Fix any
+type Token = (code: string) => any;
 
 /**
  * Fetch initial user access token, refresh token, first name and last name
@@ -18,30 +19,29 @@ type Token = (code: string) => Promise<void>;
  * Once completed, clear url and push user to home
  */
 export const getTokens: Token = async (code: string) => {
-  const clientId = localStorage.getItem(CLIENT_ID)!;
-  const clientSecret = localStorage.getItem(CLIENT_SECRET)!;
-
-  const response = await fetch(getTokensUrl({ clientId, clientSecret, code }), {
+  const response = await fetch(getTokensUrl({ code }), {
     method: 'POST',
   });
 
-  // Add data type
-  const data: Authorize = await response.json();
+  if (!response.ok) {
+    const error = await response.json();
 
+    throw error;
+  }
+
+  const data: Authorize = await response.json();
   const {
     access_token,
     refresh_token,
-    // athlete: { firstname, lastname },
+    athlete: { firstname, lastname },
   } = data;
 
-  localStorage.setItem(ACCESS_TOKEN, access_token);
-  localStorage.setItem(REFRESH_TOKEN, refresh_token);
-  // localStorage.setItem(FIRST_NAME, firstname);
-  // localStorage.setItem(LAST_NAME, lastname);
+  access_token && localStorage.setItem(ACCESS_TOKEN, access_token);
+  refresh_token && localStorage.setItem(REFRESH_TOKEN, refresh_token);
+  localStorage.setItem(FIRST_NAME, firstname);
+  localStorage.setItem(LAST_NAME, lastname);
 
-  const url = window.location.href;
-
-  window.location.href = url.split('?')[0];
+  return true;
 };
 
 type VoidReturn = () => Promise<void>;

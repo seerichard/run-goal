@@ -1,3 +1,5 @@
+import { CLIENT_ID, CLIENT_SECRET } from './constants';
+
 type AuthorizeProps = {
   clientId: string;
   redirectUrl: string;
@@ -13,20 +15,18 @@ export const authorizeUrl = ({
   `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=activity:read_all`;
 
 type GetTokensProps = {
-  clientId: string;
-  clientSecret: string;
   code: string;
 };
 
 /**
  * Gets the initial refresh and access tokens when app is first authorised
  */
-export const getTokensUrl = ({
-  clientId,
-  clientSecret,
-  code,
-}: GetTokensProps): string =>
-  `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`;
+export const getTokensUrl = ({ code }: GetTokensProps): string => {
+  const clientId = localStorage.getItem(CLIENT_ID);
+  const clientSecret = localStorage.getItem(CLIENT_SECRET);
+
+  return `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`;
+};
 
 type RefreshTokenProps = {
   clientId: string;
