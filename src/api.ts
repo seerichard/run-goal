@@ -10,8 +10,7 @@ import {
   LAST_NAME,
 } from './constants';
 
-// Fix any
-type Token = (code: string) => any;
+type Token = (code: string) => Promise<Error | true>;
 
 /**
  * Fetch initial user access token, refresh token, first name and last name
@@ -38,8 +37,8 @@ export const getTokens: Token = async (code: string) => {
 
   access_token && localStorage.setItem(ACCESS_TOKEN, access_token);
   refresh_token && localStorage.setItem(REFRESH_TOKEN, refresh_token);
-  localStorage.setItem(FIRST_NAME, firstname);
-  localStorage.setItem(LAST_NAME, lastname);
+  firstname && localStorage.setItem(FIRST_NAME, firstname);
+  lastname && localStorage.setItem(LAST_NAME, lastname);
 
   return true;
 };
