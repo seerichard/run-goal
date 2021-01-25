@@ -86,7 +86,7 @@ export const getRuns: Runs = async () => {
   const data: Activity[] = await response.json();
 
   // Filter out all non run activities
-  const runData = data.filter(({ type }: { type: string }) => type === RUN);
+  const runData = data?.filter(({ type }: { type: string }) => type === RUN);
 
   return runData;
 };
