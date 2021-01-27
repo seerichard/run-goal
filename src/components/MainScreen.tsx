@@ -1,10 +1,12 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
+import useSWR from 'swr';
+import Error from './Error';
 import { refreshToken, getRuns } from '../api';
-import { Activity } from '../types';
 import { ReactComponent as Puff } from '../images/puff.svg';
 import { media } from '../styles/breakpoints';
 import { grey1 } from '../styles/colors';
+import { refreshTokenUrl, getActivitiesUrl } from '../url';
 
 enum Direction {
   LEFT,
@@ -61,42 +63,57 @@ const Line = styled.div`
   transform: skew(-45deg);
 `;
 
+const options = {
+  revalidateOnFocus: false,
+  errorRetryCount: 3,
+};
+
 const MainScreen: FC = () => {
-  const [runData, setRunData] = useState<Activity[]>([]);
+  // The date needed to be memoized as /activities kept getting called as
+  // the date updated
+  // Current time - convert to seconds. Strava does not seem to accept milliseconds
+  const currentTime = useMemo(() => Math.floor(Date.now() / 1000), []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      refreshToken().catch((error) =>
-        console.log('Something happened refreshing the token :(', error),
-      );
+  const tokenUrl = useCallback(() => refreshTokenUrl(), []);
+  const activitiesUrl = useCallback(() => getActivitiesUrl(currentTime), []);
 
-      getRuns()
-        .then((res) => setRunData(res))
-        .catch((error) =>
-          console.log('Something happened getting activities :(', error),
-        );
-    }, 1000);
-  }, []);
+  const { error: refreshTokenError } = useSWR(tokenUrl, refreshToken, options);
 
-  console.log('runData:', runData);
+  const { data: runData = [], error: runError, isValidating } = useSWR(
+    activitiesUrl,
+    getRuns,
+    options,
+  );
+
+  if (refreshTokenError) {
+    return <Error>{refreshTokenError}</Error>;
+  }
+
+  if (runError) {
+    return <Error>{runError}</Error>;
+  }
+
+  if (isValidating) {
+    return (
+      <Wrapper>
+        <Puffer />
+      </Wrapper>
+    );
+  }
 
   const totalDistanceKm =
-    runData.reduce((acc, curr) => acc + curr.distance, 0) / 10;
+    runData?.reduce((acc, curr) => acc + curr.distance, 0) / 10;
 
   const totalDistance2Dp =
     Math.round(totalDistanceKm + Number.EPSILON * 100) / 100;
 
   return (
     <Wrapper>
-      {!runData?.length ? (
-        <Puffer />
-      ) : (
-        <Circle>
-          <Text direction={Direction.RIGHT}>{totalDistance2Dp}</Text>
-          <Line />
-          <Text direction={Direction.LEFT}>1000</Text>
-        </Circle>
-      )}
+      <Circle>
+        <Text direction={Direction.RIGHT}>{totalDistance2Dp}</Text>
+        <Line />
+        <Text direction={Direction.LEFT}>1000</Text>
+      </Circle>
     </Wrapper>
   );
 };

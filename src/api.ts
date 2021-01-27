@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { getTokensUrl, refreshTokenUrl, getActivitiesUrl } from './url';
+import { getTokensUrl } from './url';
 import { Authorize, Refresh, Activity } from './types';
 import {
   ACCESS_TOKEN,
@@ -41,13 +40,13 @@ export const getTokens: Token = async (code: string) => {
   return true;
 };
 
-type RefreshToken = () => Promise<Error | true>;
+type RefreshToken = (url: string) => Promise<Error | true>;
 
 /**
  * Refresh the access token and store in local storage
  */
-export const refreshToken: RefreshToken = async () => {
-  const response = await fetch(refreshTokenUrl(), {
+export const refreshToken: RefreshToken = async (url: string) => {
+  const response = await fetch(url, {
     method: 'POST',
   });
 
@@ -61,20 +60,25 @@ export const refreshToken: RefreshToken = async () => {
   const data: Refresh = await response.json();
   const { access_token } = data;
 
-  localStorage.setItem(ACCESS_TOKEN, access_token);
+  access_token && localStorage.setItem(ACCESS_TOKEN, access_token);
 
   return true;
 };
 
-type Runs = () => Promise<Error | Activity[]>;
+type Runs = (url: string) => Promise<Activity[]>;
 
 /**
  * Return an array of Run activities
  */
-export const getRuns: Runs = async () => {
+export const getRuns: Runs = async (url: string) => {
   const RUN = 'Run';
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
-  const response = await fetch(getActivitiesUrl());
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   if (!response.ok) {
     const error: Error = await response.json();

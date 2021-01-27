@@ -17,7 +17,7 @@ export const authorizeUrl = ({
   clientId,
   redirectUrl,
 }: AuthorizeProps): string =>
-  `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=activity:read_all`;
+  `https://www.strava.com/api/v3/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=activity:read_all`;
 
 type GetTokensProps = {
   code: string;
@@ -30,7 +30,7 @@ export const getTokensUrl = ({ code }: GetTokensProps): string => {
   const clientId = localStorage.getItem(CLIENT_ID);
   const clientSecret = localStorage.getItem(CLIENT_SECRET);
 
-  return `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`;
+  return `https://www.strava.com/api/v3/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`;
 };
 
 /**
@@ -42,7 +42,7 @@ export const refreshTokenUrl = (): string => {
   const clientSecret = localStorage.getItem(CLIENT_SECRET);
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
-  return `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
+  return `https://www.strava.com/api/v3/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`;
 };
 
 /**
@@ -50,16 +50,13 @@ export const refreshTokenUrl = (): string => {
  * This includes all non running activities.
  * Page limit set to 200 as that seems to be the maximum
  */
-export const getActivitiesUrl = (): string => {
+export const getActivitiesUrl = (currentTime: number): string => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
-  // Current time - convert to seconds. Strava does not seem to accept milliseconds
-  const BEFORE = Date.now() / 1000;
-
   //  January 1, 2021 12:00:00 AM
-  const AFTER = 1609459200;
+  const startOfYear = 1609459200;
 
   // Setting to 200 activities per call. Seems to be the max amount
   // Look into pagination when I've done over 200 activities in a year
-  return `https://www.strava.com/api/v3/athlete/activities?access_token=${accessToken}&before=${BEFORE}&after=${AFTER}&per_page=200`;
+  return `https://www.strava.com/api/v3/athlete/activities?access_token=${accessToken}&before=${currentTime}&after=${startOfYear}&per_page=200`;
 };
