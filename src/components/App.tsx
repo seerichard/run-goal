@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import Form from './Form';
 import TokenFetcher from './TokenFetcher';
-import MainScreen from './MainScreen';
+import MainScreen from './main-screen';
 import { REFRESH_TOKEN } from '../constants';
 
 const getCodeParam = () => {
