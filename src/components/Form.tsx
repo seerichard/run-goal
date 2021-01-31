@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { authorizeUrl } from '../url';
 import { ReactComponent as Dog } from '../images/dog.svg';
 import { media } from '../styles/breakpoints';
-import { white, dark1, dark2, grey1 } from '../styles/colors';
+import { white, dark1, dark2, grey1, red } from '../styles/colors';
 import { CLIENT_ID, CLIENT_SECRET } from '../constants';
 
 const Wrapper = styled.div`
@@ -64,7 +64,7 @@ const Input = styled.input`
   color: ${grey1};
   color: ${white};
   height: 40px;
-  margin-bottom: 15px;
+  margin-bottom: 2px;
   padding-left: 20px;
   font-size: 16px;
   font-family: inherit;
@@ -91,13 +91,25 @@ const Input = styled.input`
     border: ${grey1} 0.0625vw solid;
     border-radius: 0.125vw;
     height: 2.5vw;
-    margin-bottom: 0.9375vw;
+    margin-bottom: 0.125vw;
     padding-left: 1.25vw;
     font-size: 1vw;
 
     &:focus {
       border: ${white} 0.0625vw solid;
     }
+  }
+`;
+
+const ErrorText = styled.span<{ visible: boolean }>`
+  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  color: ${red};
+  font-size: 14px;
+  margin-bottom: 10px;
+
+  @media ${media.cinema} {
+    font-size: 0.875vw;
+    margin-bottom: 0.625vw;
   }
 `;
 
@@ -153,7 +165,9 @@ const Form: FC = () => {
           placeholder="Client Id"
           ref={register({ required: true })}
         />
-        {errors.clientId && 'Please enter a Client Id'}
+        <ErrorText visible={!!errors.clientId}>
+          Please enter a Client Id
+        </ErrorText>
 
         <Input
           name="clientSecret"
@@ -161,7 +175,9 @@ const Form: FC = () => {
           placeholder="Client Secret"
           ref={register({ required: true })}
         />
-        {errors.clientSecret && 'Please enter a Client Secret'}
+        <ErrorText visible={!!errors.clientSecret}>
+          Please enter a Client Secret
+        </ErrorText>
 
         <SubmitButton type="submit">Submit</SubmitButton>
       </FormWrapper>
