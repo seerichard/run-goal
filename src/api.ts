@@ -1,4 +1,3 @@
-import { getTokensUrl } from './url';
 import { Authorize, Refresh, Activity } from './types';
 import {
   ACCESS_TOKEN,
@@ -7,15 +6,15 @@ import {
   LAST_NAME,
 } from './constants';
 
-type Token = (code: string) => Promise<Error | true>;
+type Token = (url: string) => Promise<Error | true>;
 
 /**
  * Fetch initial user access token, refresh token, first name and last name
  * then store in local storage.
  * Once completed, clear url and push user to home
  */
-export const getTokens: Token = async (code: string) => {
-  const response = await fetch(getTokensUrl({ code }), {
+export const getTokens: Token = async (url) => {
+  const response = await fetch(url, {
     method: 'POST',
   });
 
@@ -45,7 +44,7 @@ type RefreshToken = (url: string) => Promise<Error | true>;
 /**
  * Refresh the access token and store in local storage
  */
-export const refreshToken: RefreshToken = async (url: string) => {
+export const refreshToken: RefreshToken = async (url) => {
   const response = await fetch(url, {
     method: 'POST',
   });
@@ -70,7 +69,7 @@ type Runs = (url: string) => Promise<Activity[]>;
 /**
  * Return an array of Run activities
  */
-export const getRuns: Runs = async (url: string) => {
+export const getRuns: Runs = async (url) => {
   const RUN = 'Run';
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
