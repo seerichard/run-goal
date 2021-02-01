@@ -45,13 +45,13 @@ const Content = styled.div`
   }
 `;
 
-const InfoWrapper = styled.div`
+const InfoWrapper = styled.div<{ first: boolean }>`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 3px;
+  margin-top: ${({ first }) => (first ? '0' : '6px')};
 
   @media ${media.cinema} {
-    margin-bottom: 0.1875vw;
+    margin-top: ${({ first }) => (first ? '0' : '0.375vw')};
   }
 `;
 
@@ -60,11 +60,11 @@ interface Data {
 }
 
 const formatData = (data: Data) =>
-  Object.entries(data).map((dataPoint) => {
+  Object.entries(data).map((dataPoint, i) => {
     const [name, value] = dataPoint;
 
     return (
-      <InfoWrapper key={name}>
+      <InfoWrapper key={name} first={i === 0}>
         <span>{name}</span>
         <span>{value}</span>
       </InfoWrapper>
