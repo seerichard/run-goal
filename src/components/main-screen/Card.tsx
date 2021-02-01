@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import { media } from '../../styles/breakpoints';
 import { grey1 } from '../../styles/colors';
 
-const CardWrapper = styled.div`
+const CardWrapper = styled.div<{ first: boolean }>`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   width: 300px;
-  margin-top: 60px;
+  margin-top: ${({ first }) => !first && '20px'};
   border: 1px solid ${grey1};
   border-radius: 3px;
 
   @media ${media.cinema} {
     width: 18.75vw;
-    margin-top: 3.75vw;
+    margin-top: ${({ first }) => !first && '1.25vw'};
     border: 0.0625vw solid ${grey1};
     border-radius: 0.1875vw;
   }
@@ -74,10 +74,11 @@ const formatData = (data: Data) =>
 type CardProps = {
   title: string;
   data: Data;
+  first?: boolean;
 };
 
-const Card: FC<CardProps> = ({ title, data }) => (
-  <CardWrapper>
+const Card: FC<CardProps> = ({ title, data, first = false }) => (
+  <CardWrapper first={first}>
     <Title>{title}</Title>
     <Content>{formatData(data)}</Content>
   </CardWrapper>
