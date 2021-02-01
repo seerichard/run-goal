@@ -35,10 +35,31 @@ const averagePace = (runData: Activity[], runs: number): string => {
   const minutesPerKm = 16.6666667;
 
   const pace = minutesPerKm / averageOfaverageSpeeds;
-  const min = Math.floor(pace);
-  const secs = Math.round((pace - min) * 60);
+  const mins = Math.floor(pace);
+  const secs = Math.round((pace - mins) * 60);
 
-  return `${min}:${secs} / km`;
+  return `${mins}:${secs} / km`;
+};
+
+const timeToCompleteGoal = (
+  runData: Activity[],
+  runs: number,
+  remainingKm: number,
+): string => {
+  // In metres per second
+  const averageOfaverageSpeeds =
+    runData?.reduce((acc, { average_speed }) => acc + average_speed, 0) / runs;
+
+  // 1 second per metre = 16.6666667 minutes per km
+  const minutesPerKm = 16.6666667;
+
+  const pace = minutesPerKm / averageOfaverageSpeeds;
+  const totalTimeMinutes = remainingKm * pace;
+  const rawHours = totalTimeMinutes / 60;
+  const hours = Math.round(rawHours);
+  const minutes = Math.round((rawHours - Math.floor(rawHours)) * 60);
+
+  return `${hours}h ${minutes}m`;
 };
 
 type InfoProps = {
@@ -70,19 +91,6 @@ const Info: FC<InfoProps> = ({ runData }) => {
   // Km remaining to complete goal
   const remainingKm = 1000 - totalDistanceMetres / 100;
 
-  /**
-   * Metres per second * 60
-   * Metres per minute 180.42    819.58
-   *
-   * 3 m/s / 1000
-   * 0.003 km/s * 60
-   * 0.18 km/m * 60
-   * 944.22 Remaining km / 10.8 km/h
-   * 87.43 Remaining h
-   */
-
-  // console.log('totalDistanceMetres:', totalDistanceMetres);
-
   return (
     <>
       <Goal totalDistance={convertTo2DP(totalDistanceKm)} />
@@ -99,10 +107,11 @@ const Info: FC<InfoProps> = ({ runData }) => {
         title="Stats"
         data={{
           'Remaining Km': `${convertTo2DP(remainingKm)}km`,
+          'Avg pace': averagePace(runData, runs),
           'Avg Km per week to complete': `${convertTo2DP(
             kmPerWeek(remainingKm),
           )}km`,
-          'Avg pace': averagePace(runData, runs),
+          'Time to complete': timeToCompleteGoal(runData, runs, remainingKm),
         }}
       />
     </>
