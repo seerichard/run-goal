@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import styled from 'styled-components';
-import type { Activity } from '../../types/activity';
 import { media } from '../../styles/breakpoints';
 import { grey1 } from '../../styles/colors';
 
@@ -8,6 +7,7 @@ const Circle = styled.div`
   height: 300px;
   width: 300px;
   margin-top: 100px;
+  margin-bottom: 60px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -20,6 +20,7 @@ const Circle = styled.div`
     height: 18.75vw;
     width: 18.75vw;
     margin-top: 6.25vw;
+    margin-bottom: 3.75vw;
     border: ${grey1} 0.3125vw solid;
   }
 `;
@@ -62,23 +63,15 @@ const Line = styled.div`
 `;
 
 type InfoProps = {
-  runData: Activity[];
+  totalDistance: string;
 };
 
-const Info: FC<InfoProps> = ({ runData }) => {
-  const totalDistanceKm =
-    runData?.reduce((acc, curr) => acc + curr.distance, 0) / 10;
-
-  const totalDistance2Dp =
-    Math.round(totalDistanceKm + Number.EPSILON * 100) / 100;
-
-  return (
-    <Circle>
-      <Text direction={Direction.RIGHT}>{totalDistance2Dp}</Text>
-      <Line />
-      <Text direction={Direction.LEFT}>1000</Text>
-    </Circle>
-  );
-};
+const Info: FC<InfoProps> = ({ totalDistance }) => (
+  <Circle>
+    <Text direction={Direction.RIGHT}>{totalDistance}</Text>
+    <Line />
+    <Text direction={Direction.LEFT}>1000</Text>
+  </Circle>
+);
 
 export default Info;

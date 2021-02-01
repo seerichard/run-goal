@@ -53,7 +53,7 @@ export type Activity = {
   gear_id: string;
   from_accepted_tag: boolean;
   upload_id_str: string;
-  average_speed: number;
+  average_speed: number; // Metres per second
   max_speed: number;
   has_heartrate: boolean;
   average_heartrate: number;
