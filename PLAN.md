@@ -38,10 +38,24 @@
 - Move the url redirect from API to TokenFetcher component and update comment
 - Add types to run data
 - Remove eslint-disable in api.ts
+- Remove eslint-disable in Form.tsx
 - Wrap API calls in try/catch instead of .then()
 - Link to Strava docs
 - Is there a way to safely store the client id and secret locally? - Required to refresh access token
 - Look into Web Vitals
 - Try using the Strava npm package https://www.npmjs.com/package/strava-v3
 - Look into polyline
-- Improve types and add error tpyes for API calls
+- Improve types and add error types for API calls
+- Stop zooming in on input entry
+- Doc on how to deploy
+- Doc on how to get Client Id and Client Secret
+- Invalid entry on form
+- Add commit hash to app
+- Fix any in api.ts
+- Save run data to give instant stale result
+- Pass the bearer?
+- Pass url string to getTokens function
+- Move body css stylings from createGlobalStyle to index.html
+- Possibly memo data
+- Decode polyline and display map
+- Does <Info /> runData calculations need optional chaining?
