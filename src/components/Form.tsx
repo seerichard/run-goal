@@ -143,8 +143,8 @@ const Form: FC = () => {
   const { register, errors, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = ({ clientId, clientSecret }: FormValues) => {
-    localStorage.setItem(CLIENT_ID, clientId);
-    localStorage.setItem(CLIENT_SECRET, clientSecret);
+    localStorage.setItem(CLIENT_ID, clientId.trim());
+    localStorage.setItem(CLIENT_SECRET, clientSecret.trim());
 
     const redirectUrl = window.location.href;
 
