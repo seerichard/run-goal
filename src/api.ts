@@ -1,4 +1,4 @@
-import { Authorize, Refresh, Activity } from './types';
+import { Authorize, Refresh, Activity, Quotes } from './types';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -91,4 +91,23 @@ export const getRuns: Runs = async (url) => {
   const runData = data?.filter(({ type }: { type: string }) => type === RUN);
 
   return runData;
+};
+
+type GetQuotes = (url: string) => Promise<Quotes[]>;
+
+/**
+ * Return an array of motivational quotes
+ */
+export const getQuotes: GetQuotes = async (url) => {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    const error: Error = await response.json();
+
+    throw error;
+  }
+
+  const data: Quotes[] = await response.json();
+
+  return data;
 };

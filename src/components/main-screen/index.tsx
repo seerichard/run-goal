@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useSWR from 'swr';
 import Error from '../Error';
 import Info from './Info';
+import Motivation from './Motivation';
 import { refreshToken, getRuns } from '../../api';
 import { ReactComponent as Puff } from '../../images/puff.svg';
 import { media } from '../../styles/breakpoints';
@@ -68,6 +69,7 @@ const MainScreen: FC = () => {
   return (
     <Wrapper>
       <Info runData={runData} />
+      <Motivation />
     </Wrapper>
   );
 };

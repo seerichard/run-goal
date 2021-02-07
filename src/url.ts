@@ -60,3 +60,8 @@ export const getActivitiesUrl = (currentTime: number): string => {
   // Look into pagination when I've done over 200 activities in a year
   return `https://www.strava.com/api/v3/athlete/activities?access_token=${accessToken}&before=${currentTime}&after=${startOfYear}&per_page=200`;
 };
+
+/**
+ * Gets an array of motivational quotes
+ */
+export const getQuotesUrl = 'https://type.fit/api/quotes';
