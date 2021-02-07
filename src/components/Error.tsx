@@ -6,7 +6,6 @@ import { red } from '../styles/colors';
 const Wrapper = styled.div`
   display: flex;
   width: calc(100% - 60px); /* Margin of 30px on each side */
-  box-sizing: border-box;
   margin: 40px auto;
   border: ${red} 1px solid;
   border-radius: 5px;

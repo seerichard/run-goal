@@ -7,7 +7,6 @@ const Circle = styled.div`
   height: 300px;
   width: 300px;
   margin: 60px auto;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;

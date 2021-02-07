@@ -6,7 +6,6 @@ import { grey1 } from '../../styles/colors';
 const CardWrapper = styled.div<{ first: boolean }>`
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
   width: 300px;
   margin-top: ${({ first }) => !first && '20px'};
   border: 1px solid ${grey1};

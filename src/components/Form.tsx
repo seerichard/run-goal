@@ -42,7 +42,6 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: calc(100% - 60px); /* Margin of 30px on each side */
-  box-sizing: border-box;
   margin-top: 40px;
 
   @media ${media.tablet} {
