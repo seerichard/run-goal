@@ -6,10 +6,14 @@ import { grey1 } from '../../styles/colors';
 const CardWrapper = styled.div<{ first: boolean }>`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: calc(100% - 40px); // 20px padding each side
   margin-top: ${({ first }) => !first && '20px'};
   border: 1px solid ${grey1};
   border-radius: 3px;
+
+  @media ${media.desktop} {
+    width: 300px;
+  }
 
   @media ${media.cinema} {
     width: 18.75vw;
