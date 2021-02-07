@@ -6,8 +6,7 @@ import { grey1 } from '../../styles/colors';
 const Circle = styled.div`
   height: 300px;
   width: 300px;
-  margin-top: 100px;
-  margin-bottom: 60px;
+  margin: 60px auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -19,8 +18,7 @@ const Circle = styled.div`
   @media ${media.cinema} {
     height: 18.75vw;
     width: 18.75vw;
-    margin-top: 6.25vw;
-    margin-bottom: 3.75vw;
+    margin: 3.75vw auto;
     border: ${grey1} 0.3125vw solid;
   }
 `;
