@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import Footer, { height } from './Footer';
 import { authorizeUrl } from '../url';
 import { ReactComponent as Dog } from '../images/dog.svg';
 import { media } from '../styles/breakpoints';
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${height};
 `;
 
 const Doggy = styled(Dog)`
@@ -151,36 +153,39 @@ const Form: FC = () => {
   };
 
   return (
-    <Wrapper>
-      <div>
-        <Doggy />
-        <Title>Run Goal</Title>
-      </div>
-      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          name="clientId"
-          type="number"
-          inputMode="numeric"
-          placeholder="Client Id"
-          ref={register({ required: true })}
-        />
-        <ErrorText visible={!!errors.clientId}>
-          Please enter a Client Id
-        </ErrorText>
+    <>
+      <Wrapper>
+        <div>
+          <Doggy />
+          <Title>Run Goal</Title>
+        </div>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            name="clientId"
+            type="number"
+            inputMode="numeric"
+            placeholder="Client Id"
+            ref={register({ required: true })}
+          />
+          <ErrorText visible={!!errors.clientId}>
+            Please enter a Client Id
+          </ErrorText>
 
-        <Input
-          name="clientSecret"
-          type="password"
-          placeholder="Client Secret"
-          ref={register({ required: true })}
-        />
-        <ErrorText visible={!!errors.clientSecret}>
-          Please enter a Client Secret
-        </ErrorText>
+          <Input
+            name="clientSecret"
+            type="password"
+            placeholder="Client Secret"
+            ref={register({ required: true })}
+          />
+          <ErrorText visible={!!errors.clientSecret}>
+            Please enter a Client Secret
+          </ErrorText>
 
-        <SubmitButton type="submit">Submit</SubmitButton>
-      </FormWrapper>
-    </Wrapper>
+          <SubmitButton type="submit">Submit</SubmitButton>
+        </FormWrapper>
+      </Wrapper>
+      <Footer />
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import useSWR from 'swr';
 import Error from '../Error';
 import Info from './Info';
 import Motivation from './Motivation';
+import Footer, { height } from '../Footer';
 import { refreshToken, getRuns } from '../../api';
 import { ReactComponent as Puff } from '../../images/puff.svg';
 import { media } from '../../styles/breakpoints';
@@ -13,6 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${height};
 `;
 
 const Puffer = styled(Puff)`
@@ -42,13 +44,24 @@ const MainScreen: FC = () => {
   const tokenUrl = useCallback(() => refreshTokenUrl(), []);
   const activitiesUrl = useCallback(() => getActivitiesUrl(currentTime), []);
 
-  const { error: refreshTokenError } = useSWR(tokenUrl, refreshToken, options);
+  const {
+    error: refreshTokenError,
+    isValidating: isValidatingRefresh,
+  } = useSWR(tokenUrl, refreshToken, options);
 
   const { data: runData = [], error: runError, isValidating } = useSWR(
     activitiesUrl,
     getRuns,
     options,
   );
+
+  if (isValidatingRefresh || isValidating) {
+    return (
+      <Wrapper>
+        <Puffer />
+      </Wrapper>
+    );
+  }
 
   if (refreshTokenError) {
     return <Error>{refreshTokenError}</Error>;
@@ -58,19 +71,14 @@ const MainScreen: FC = () => {
     return <Error>{runError}</Error>;
   }
 
-  if (isValidating) {
-    return (
-      <Wrapper>
-        <Puffer />
-      </Wrapper>
-    );
-  }
-
   return (
-    <Wrapper>
-      <Info runData={runData} />
-      <Motivation />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Info runData={runData} />
+        <Motivation />
+      </Wrapper>
+      <Footer />
+    </>
   );
 };
 
