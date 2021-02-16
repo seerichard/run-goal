@@ -12,6 +12,8 @@ export const height = css`
 `;
 
 const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   color: ${grey1};
   height: 60px;
   padding: 20px;
@@ -25,7 +27,10 @@ const Wrapper = styled.div`
 `;
 
 const Footer: FC = () => (
-  <Wrapper>© {new Date().getFullYear()} Richard See </Wrapper>
+  <Wrapper>
+    <span>© {new Date().getFullYear()} Richard See</span>
+    <span>{process.env.REACT_APP_VERSION}</span>
+  </Wrapper>
 );
 
 export default Footer;
