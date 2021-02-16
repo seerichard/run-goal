@@ -12,6 +12,11 @@ export const runningTime = (movingTime: number): string => {
   return `${hours}h ${minutes}m`;
 };
 
+export const averageDistance = (
+  totalDistanceMetres: number,
+  runs: number,
+): number => totalDistanceMetres / runs / 100;
+
 export const kmPerWeek = (remainingKm: number): number => {
   // Difference in days between today and 1st January 2022
   const diff = differenceInDays(new Date(2022, 0, 1), Date.now());

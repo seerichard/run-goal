@@ -5,6 +5,7 @@ import Card from './Card';
 import {
   convertTo2DP,
   runningTime,
+  averageDistance,
   kmPerWeek,
   averagePace,
   timeToCompleteGoal,
@@ -55,6 +56,9 @@ const Info: FC<InfoProps> = ({ runData }) => {
         title="Stats"
         data={{
           'Remaining Km': `${convertTo2DP(remainingKm)}km`,
+          'Avg distance per run': `${convertTo2DP(
+            averageDistance(totalDistanceMetres, runs),
+          )}km`,
           'Avg pace': averagePace(runData, runs),
           'Avg Km per week to complete': `${convertTo2DP(
             kmPerWeek(remainingKm),
