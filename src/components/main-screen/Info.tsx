@@ -1,66 +1,14 @@
 import type { FC } from 'react';
-import differenceInDays from 'date-fns/differenceInDays';
 import type { Activity } from '../../types/activity';
 import Goal from './Goal';
 import Card from './Card';
-
-// FYI returns a string, not a number
-const convertTo2DP = (number: number) => number.toFixed(2);
-
-const runningTime = (movingTime: number): string => {
-  // Time
-  const hours = Math.floor(movingTime / 3600);
-  const minutes = Math.floor((movingTime % 3600) / 60);
-
-  return `${hours}h ${minutes}m`;
-};
-
-const kmPerWeek = (remainingKm: number): number => {
-  // Difference in days between today and 1st January 2022
-  const diff = differenceInDays(new Date(2022, 0, 1), Date.now());
-
-  // Required distance per day to complete goal
-  const kmPerDay = remainingKm / diff;
-
-  // Required distance per week to complete goal
-  return kmPerDay * 7;
-};
-
-const averagePace = (runData: Activity[], runs: number): string => {
-  // In metres per second
-  const averageOfaverageSpeeds =
-    runData?.reduce((acc, { average_speed }) => acc + average_speed, 0) / runs;
-
-  // 1 second per metre = 16.6666667 minutes per km
-  const minutesPerKm = 16.6666667;
-
-  const pace = minutesPerKm / averageOfaverageSpeeds;
-  const mins = Math.floor(pace);
-  const secs = Math.round((pace - mins) * 60);
-
-  return `${mins}:${secs} / km`;
-};
-
-const timeToCompleteGoal = (
-  runData: Activity[],
-  runs: number,
-  remainingKm: number,
-): string => {
-  // In metres per second
-  const averageOfaverageSpeeds =
-    runData?.reduce((acc, { average_speed }) => acc + average_speed, 0) / runs;
-
-  // 1 second per metre = 16.6666667 minutes per km
-  const minutesPerKm = 16.6666667;
-
-  const pace = minutesPerKm / averageOfaverageSpeeds;
-  const totalTimeMinutes = remainingKm * pace;
-  const rawHours = totalTimeMinutes / 60;
-  const hours = Math.round(rawHours);
-  const minutes = Math.round((rawHours - Math.floor(rawHours)) * 60);
-
-  return `${hours}h ${minutes}m`;
-};
+import {
+  convertTo2DP,
+  runningTime,
+  kmPerWeek,
+  averagePace,
+  timeToCompleteGoal,
+} from './utils';
 
 type InfoProps = {
   runData: Activity[];
@@ -99,7 +47,7 @@ const Info: FC<InfoProps> = ({ runData }) => {
         data={{
           'Runs': runs,
           'Time': runningTime(movingTime),
-          'Elevation Gain': `${elevationGain}m`,
+          'Elevation Gain': `${convertTo2DP(elevationGain)}m`,
         }}
         first={true}
       />
