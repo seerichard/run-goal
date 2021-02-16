@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 `;
 
 const Footer: FC = () => (
-  <Wrapper>Richard See {new Date().getFullYear()}</Wrapper>
+  <Wrapper>© {new Date().getFullYear()} Richard See </Wrapper>
 );
 
 export default Footer;
